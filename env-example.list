@@ -1,0 +1,5 @@
+NODE_ENV=production
+
+# Application envs
+HOST=
+MONGODB_URI=

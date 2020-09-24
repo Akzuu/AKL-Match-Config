@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log
+
+# Ignore local configs
+config/local.js
+*.env
+.eslintrc.js

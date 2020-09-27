@@ -42,11 +42,8 @@ const handler = async (req, reply) => {
   }
 
   if (!matchConfig) {
-    // Serve nothing
-    reply.send({
-      status: 'OK',
-      message: 'No matches for this server in the next 3 hours',
-    });
+    // Serve practice
+    reply.sendFile('practice.json');
     return;
   }
 

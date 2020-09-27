@@ -1,5 +1,4 @@
 NODE_ENV=production
 
 # Application envs
-HOST=
-MONGODB_URI=
+MONGODB_URI=mongodb://database:27017/akl-config

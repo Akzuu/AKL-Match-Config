@@ -19,13 +19,13 @@
 	],
 
 	"team1": {
-		"name": "TERRORISTS",
-		"tag": "T"
+		"name": "COUNTER-TERRORISTS",
+		"tag": "CT"
 	},
 
 	"team2": {
-		"name": "COUNTER-TERRORISTS",
-		"tag": "CT"
+		"name": "TERRORISTS",
+		"tag": "T"
 	},
 
 	"cvars": {

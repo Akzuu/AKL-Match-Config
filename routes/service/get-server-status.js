@@ -18,17 +18,17 @@ const schema = {
 const handler = async (req, reply) => {
   const currentTime = new Date();
   const currentTimePlusFifteen = new Date();
-  currentTimePlusFifteen.setMinutes(currentTimePlusFifteen.getMinutes + 15);
+  currentTimePlusFifteen.setMinutes(currentTime.getMinutes() + 15);
 
   let matchConfig;
   try {
     matchConfig = await MatchConfig.findOne({
       server: req.params.server,
       'matchDate.startTime': {
-        $gte: currentTimePlusFifteen,
+        $lte: currentTimePlusFifteen,
       },
       'matchDate.endTime': {
-        $lte: currentTime,
+        $gte: currentTime,
       },
     });
   } catch (error) {
@@ -51,7 +51,7 @@ const handler = async (req, reply) => {
 module.exports = async function (fastify) {
   fastify.route({
     method: 'GET',
-    url: '/config/:server',
+    url: '/:server/runningMatch',
     handler,
     schema,
   });

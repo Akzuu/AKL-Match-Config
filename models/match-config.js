@@ -24,6 +24,7 @@ const schema = new Schema({
       type: Date,
     },
     endTime: {
+      required: true,
       type: Date,
     },
   },

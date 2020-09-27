@@ -28,7 +28,6 @@ const handler = async (req, reply) => {
         $gte: startTime,
         $lte: endStartTime,
       },
-      // matchServed: false,
     }, {
       matchServed: true,
     });

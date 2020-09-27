@@ -20,6 +20,9 @@ const handler = async (req, reply) => {
   const endStartTime = new Date();
   endStartTime.setHours(endStartTime.getHours() + 3);
 
+  log.info(startTime)
+  log.info(endStartTime)
+
   let matchConfig;
   try {
     matchConfig = await MatchConfig.findOneAndUpdate({

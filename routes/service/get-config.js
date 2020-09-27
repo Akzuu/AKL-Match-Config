@@ -16,20 +16,19 @@ const schema = {
 };
 
 const handler = async (req, reply) => {
-  const startTime = new Date();
-  const endStartTime = new Date();
-  endStartTime.setHours(endStartTime.getHours() + 3);
-
-  log.info(startTime)
-  log.info(endStartTime)
+  const currentTime = new Date();
+  const currentTimePlusOneHour = new Date();
+  currentTimePlusOneHour.setHours( currentTimePlusOneHour.getHours() + 1);
 
   let matchConfig;
   try {
     matchConfig = await MatchConfig.findOneAndUpdate({
       server: req.params.server,
       'matchDate.startTime': {
-        $gte: startTime,
-        $lte: endStartTime,
+        $lte: currentTimePlusOneHour,
+      },
+      'matchDate.endTime': {
+        $gte: currentTime,
       },
     }, {
       matchServed: true,

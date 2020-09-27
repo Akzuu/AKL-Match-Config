@@ -1,0 +1,34 @@
+{
+	"matchid": "practice_b01",
+	"num_maps": 1,
+	"players_per_team": 5,
+	"min_players_to_ready": 1,
+	"min_spectators_to_ready": 0,
+	"skip_veto": false,
+	"veto_first": "team1",
+	"side_type": "standard",
+	"maplist":
+	[
+    "de_inferno",
+    "de_train",
+    "de_mirage",
+    "de_nuke",
+    "de_overpass",
+    "de_dust2",
+    "de_vertigo"
+	],
+
+	"team1": {
+		"name": "TERRORISTS",
+		"tag": "T"
+	},
+
+	"team2": {
+		"name": "COUNTER-TERRORISTS",
+		"tag": "CT"
+	},
+
+	"cvars": {
+		"get5_check_auths": "0"
+	}
+}

@@ -20,9 +20,9 @@ const handler = async (req, reply) => {
   const currentTimePlusOneHour = new Date();
   currentTimePlusOneHour.setHours(currentTimePlusOneHour.getHours() + 1);
 
-  log.info('Servu: ', req.params.server);
-  log.info('Aika nyt: ', currentTime);
-  log.info('Aika tunnin paasta: ', currentTimePlusOneHour);
+  log.info(`Servu: ${req.params.server}`);
+  log.info(`Aika nyt: ${currentTime}`);
+  log.info(`Aika tunnin paasta: ${currentTimePlusOneHour}`);
 
   let matchConfig;
   try {

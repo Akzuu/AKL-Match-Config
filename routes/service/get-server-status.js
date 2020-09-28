@@ -40,6 +40,9 @@ const handler = async (req, reply) => {
     return;
   }
 
+  const allConfigs = await MatchConfig.find({});
+  log.info(allConfigs);
+
   if (!matchConfig) {
     reply.send(false);
     return;

@@ -18,7 +18,7 @@ const schema = {
 const handler = async (req, reply) => {
   const currentTime = new Date();
   const currentTimePlusOneHour = new Date();
-  currentTimePlusOneHour.setHours( currentTimePlusOneHour.getHours() + 1);
+  currentTimePlusOneHour.setHours(currentTimePlusOneHour.getHours() + 1);
 
   let matchConfig;
   try {

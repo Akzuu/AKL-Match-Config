@@ -1,3 +1,4 @@
+const moment = require('moment');
 const { log } = require('../../lib');
 const { MatchConfig } = require('../../models');
 
@@ -16,20 +17,10 @@ const schema = {
 };
 
 const handler = async (req, reply) => {
-  const currentTime = new Date();
-  const currentTimePlusFifteen = new Date();
-  currentTimePlusFifteen.setMinutes(currentTime.getMinutes() + 15);
-
-  let matchConfig;
+  let matchConfigs;
   try {
-    matchConfig = await MatchConfig.findOne({
+    matchConfigs = await MatchConfig.find({
       server: req.params.server,
-      'matchDate.startTime': {
-        $lte: currentTimePlusFifteen,
-      },
-      'matchDate.endTime': {
-        $gte: currentTime,
-      },
     });
   } catch (error) {
     log.error('Error when trying to find config! ', error);
@@ -40,7 +31,26 @@ const handler = async (req, reply) => {
     return;
   }
 
-  if (!matchConfig) {
+  if (!matchConfigs || matchConfigs.length < 1) {
+    reply.send(false);
+    return;
+  }
+
+  const currentTime = moment();
+  const currentTimePlusOneHour = moment().add(15, 'minutes');
+
+  const configToBeServer = matchConfigs.find((matchConfig) => {
+    if (currentTime
+      .isBetween(matchConfig.matchDate.startTime, matchConfig.matchDate.endTime)
+    || currentTimePlusOneHour
+      .isBetween(matchConfig.matchDate.startTime, matchConfig.matchDate.endTime)) {
+      return matchConfig;
+    }
+    return undefined;
+  });
+
+  if (!configToBeServer) {
+    // Serve practice
     reply.send(false);
     return;
   }

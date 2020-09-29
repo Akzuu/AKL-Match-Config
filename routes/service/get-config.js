@@ -1,3 +1,4 @@
+const moment = require('moment');
 const { log, writeConfigFile } = require('../../lib');
 const { MatchConfig } = require('../../models');
 
@@ -16,22 +17,10 @@ const schema = {
 };
 
 const handler = async (req, reply) => {
-  const currentTime = new Date();
-  const currentTimePlusOneHour = new Date();
-  currentTimePlusOneHour.setHours( currentTimePlusOneHour.getHours() + 1);
-
-  let matchConfig;
+  let matchConfigs;
   try {
-    matchConfig = await MatchConfig.findOneAndUpdate({
+    matchConfigs = await MatchConfig.find({
       server: req.params.server,
-      'matchDate.startTime': {
-        $lte: currentTimePlusOneHour,
-      },
-      'matchDate.endTime': {
-        $gte: currentTime,
-      },
-    }, {
-      matchServed: true,
     });
   } catch (error) {
     log.error('Error when trying to find config! ', error);
@@ -42,7 +31,26 @@ const handler = async (req, reply) => {
     return;
   }
 
-  if (!matchConfig) {
+  if (!matchConfigs || matchConfigs.length < 1) {
+    // Serve practice
+    reply.sendFile('practice.json');
+    return;
+  }
+
+  const currentTime = moment();
+  const currentTimePlusOneHour = moment().add(1, 'hours');
+
+  const configToBeServer = matchConfigs.find((matchConfig) => {
+    if (currentTime
+      .isBetween(matchConfig.matchDate.startTime, matchConfig.matchDate.endTime)
+    || currentTimePlusOneHour
+      .isBetween(matchConfig.matchDate.startTime, matchConfig.matchDate.endTime)) {
+      return matchConfig;
+    }
+    return undefined;
+  });
+
+  if (!configToBeServer) {
     // Serve practice
     reply.sendFile('practice.json');
     return;
@@ -50,7 +58,7 @@ const handler = async (req, reply) => {
 
   let filename;
   try {
-    filename = await writeConfigFile(matchConfig);
+    filename = await writeConfigFile(configToBeServer);
   } catch (error) {
     log.error('Error when trying to write config file! ', error);
     reply.status(500).send({

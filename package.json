@@ -15,6 +15,7 @@
     "fastify-helmet": "^5.0.3",
     "fastify-static": "^3.2.0",
     "fastify-swagger": "^3.3.0",
+    "moment": "^2.29.0",
     "mongoose": "^5.10.6",
     "winston": "^3.3.3"
   },

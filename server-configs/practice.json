@@ -29,6 +29,7 @@
 	},
 
 	"cvars": {
-		"get5_check_auths": "0"
+		"get5_check_auths": "0",
+		"get5_demo_name_format": "{MATCHID}_map{MAPNUMBER}_{MAPNAME}_{TIME}"
 	}
 }
